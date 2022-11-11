@@ -11,6 +11,8 @@ public class app_ui extends JFrame {
 
     JFrame frame = new JFrame();
     OrderInfo order = new OrderInfo();
+    CustInfo customer = new CustInfo();
+    
     /**
      * Creates new form app_ui
      */
@@ -521,12 +523,14 @@ public class app_ui extends JFrame {
         ccNumberTxtField.setText(" ");
 
         ccCusLnameField.setColumns(20);
+        
 
         ccNameLabel.setText("Customer First Name:");
 
         ccNumberLabel.setText("Card Number: ");
 
         ccCusFnameField.setColumns(20);
+        
 
         javax.swing.GroupLayout ccInternalPanel1Layout = new javax.swing.GroupLayout(ccInternalPanel1);
         ccInternalPanel1.setLayout(ccInternalPanel1Layout);
@@ -578,6 +582,11 @@ public class app_ui extends JFrame {
         });
 
         ccOkButton.setText("OK");
+        ccOkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ccOkButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ccInternalPanel2Layout = new javax.swing.GroupLayout(ccInternalPanel2);
         ccInternalPanel2.setLayout(ccInternalPanel2Layout);
@@ -680,6 +689,11 @@ public class app_ui extends JFrame {
         });
 
         cashOkButton.setText("OK");
+        cashOkButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cashOkButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout cashInternalPanel2Layout = new javax.swing.GroupLayout(cashInternalPanel2);
         cashInternalPanel2.setLayout(cashInternalPanel2Layout);
@@ -878,7 +892,7 @@ public class app_ui extends JFrame {
         //Currency Php = Currency.getInstance("PHP");
         //Locale Ph= new Locale("ph", "PHP");
         //NumberFormat Phpformat= NumberFormat.getInstance(new Locale("ph","PH"));
-        
+        CustInfo.setCuisineType("Western");
         order.setWestPrice("550");
         ppHeadTextField.setText(NumberFormat.getCurrencyInstance(new Locale("en","PH")).format(Double.parseDouble(order.getWestPrice())));
         
@@ -887,6 +901,8 @@ public class app_ui extends JFrame {
         
         order.setWestSubTotal(String.valueOf(WestSubTotal));
         subtotalTextField1.setText(NumberFormat.getCurrencyInstance(new Locale("en","PH")).format(Double.parseDouble(order.getWestSubTotal())));
+        CustInfo.setTotal(order.getWestSubTotal());
+        CustInfo.setPerHead(order.getWestPrice());
         
         card.show(jPanel2, "payPanel");
 
@@ -895,6 +911,7 @@ public class app_ui extends JFrame {
     private void PhSelectBtn1ActionPerformed(java.awt.event.ActionEvent evt) {                                             
         CardLayout card = (CardLayout)jPanel2.getLayout();
         
+        CustInfo.setCuisineType("Filipino");
         order.setFilPrice("525");
         ppHeadTextField.setText(NumberFormat.getCurrencyInstance(new Locale("en","PH")).format(Double.parseDouble(order.getFilPrice())));
         
@@ -903,6 +920,8 @@ public class app_ui extends JFrame {
         
         order.setFilSubTotal(String.valueOf(FilSubTotal));
         subtotalTextField1.setText(NumberFormat.getCurrencyInstance(new Locale("en","PH")).format(Double.parseDouble(order.getFilSubTotal())));
+        CustInfo.setTotal(order.getFilSubTotal());
+        CustInfo.setPerHead(order.getFilPrice());
         
         card.show(jPanel2, "payPanel");
     }                                            
@@ -910,6 +929,7 @@ public class app_ui extends JFrame {
     private void PhSelectBtn2ActionPerformed(java.awt.event.ActionEvent evt) {                                             
         CardLayout card = (CardLayout)jPanel2.getLayout();
         
+        CustInfo.setCuisineType("Mediterranean");
         order.setMedPrice("575");
         ppHeadTextField.setText(NumberFormat.getCurrencyInstance(new Locale("en","PH")).format(Double.parseDouble(order.getMedPrice())));
         
@@ -918,6 +938,8 @@ public class app_ui extends JFrame {
         
         order.setMedSubTotal(String.valueOf(MedSubTotal));
         subtotalTextField1.setText(NumberFormat.getCurrencyInstance(new Locale("en","PH")).format(Double.parseDouble(order.getMedSubTotal())));
+        CustInfo.setTotal(order.getMedSubTotal());
+        CustInfo.setPerHead(order.getMedPrice());
         
         card.show(jPanel2, "payPanel");
     }                                            
@@ -971,8 +993,55 @@ public class app_ui extends JFrame {
     private void ccBackButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                              
         CardLayout card = (CardLayout)payOptionPanel.getLayout();
         card.show(payOptionPanel, "payOptionPanel");
-    }                                             
+    }     
+    
+    private void ccOkButtonActionPerformed(java.awt.event.ActionEvent evt) {       
+        CustInfo.setMOP("Credit Card");
+        String CFName = ccCusFnameField.getText();
+        String CLName = ccCusLnameField.getText();
+        String PaxInput = noAttendField.getText();        
+        String CNumber = ccNumberTxtField.getText();
+        
+        CustInfo.setCustFName(CFName);
+        CustInfo.setCustLName(CLName);       
 
+        
+       
+        JOptionPane.showMessageDialog(frame, "Thank You " +CustInfo.getCustFName() 
+        +"!\nHere's a review of your transaction:"
+        +"\nFull name: " +CustInfo.getCustFName() +" " +CustInfo.getCustLName() 
+        + "\nType of Event: " +CustInfo.getEventType()
+        +"\nDate of Event: " +CustInfo.getDate() 
+        +"\nNumber of Persons: " +CustInfo.getPax()
+        +"\nCuisine Type: " +CustInfo.getCuisineType() 
+        +"\nMode of Payment: " +CustInfo.getMOP()
+        +"\nPrice per head: " +CustInfo.getPerHead()
+        +"\nTotal: " +CustInfo.getTotal());
+        
+        
+    }  
+        private void cashOkButtonActionPerformed(java.awt.event.ActionEvent evt) {       
+        CustInfo.setMOP("Cash");
+        String CFName = cashCusFnameField1.getText();
+        String CLName = cashCusLnameField1.getText();
+        String PaxInput = noAttendField.getText();        
+        
+        CustInfo.setCustFName(CFName);
+        CustInfo.setCustLName(CLName);       
+     
+        JOptionPane.showMessageDialog(frame, "Thank You " +CustInfo.getCustFName() 
+        +"!\nHere's a review of your transaction:"
+        +"\nFull name: " +CustInfo.getCustFName() +" " +CustInfo.getCustLName() 
+        + "\nType of Event: " +CustInfo.getEventType()
+        +"\nDate of Event: " +CustInfo.getDate() 
+        +"\nNumber of Persons: " +CustInfo.getPax()
+        +"\nCuisine Type: " +CustInfo.getCuisineType() 
+        +"\nMode of Payment: " +CustInfo.getMOP()
+        +"\nPrice per head: " +CustInfo.getPerHead()
+        +"\nTotal: " +CustInfo.getTotal());
+        
+        
+    }  
     private void cashBackButtonActionPerformed(java.awt.event.ActionEvent evt) {                                               
         CardLayout card = (CardLayout)payOptionPanel.getLayout();
         card.show(payOptionPanel, "payOptionPanel");
