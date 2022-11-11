@@ -3,24 +3,24 @@
  * @author Jaafary
  */
 public class OrderInfo {
-    String EventType;
-    String Pax;
-    String Date;
+    static String EventType;
+    static String Pax;
+    static String Date;
     
-    String WestPrice;
-    String WestSubTotal;
-    String WestMenu;
+    static String WestPrice;
+    static String WestSubTotal;
+    static String WestMenu;
     
-    String FilPrice;
-    String FilSubTotal;
-    String FilMenu;
+    static String FilPrice;
+    static String FilSubTotal;
+    static String FilMenu;
     
-    String MedPrice;
-    String MedSubTotal;
-    String MedMenu;
+    static String MedPrice;
+    static String MedSubTotal;
+    static String MedMenu;
     
     //Event type
-    public String getEventType(){
+    public static String getEventType(){
         return EventType;
     }
     public void setEventType(String nEventType){
@@ -28,7 +28,7 @@ public class OrderInfo {
     }
     
     //Number of Attendees
-    public String getPax(){
+    public static String getPax(){
         return Pax;
     }
     public void setPax(String nPax){
@@ -36,7 +36,7 @@ public class OrderInfo {
     }
     
     //Date
-    public String getDate(){
+    public static String getDate(){
         return Date;
     }
     public void setDate(String nDate){
